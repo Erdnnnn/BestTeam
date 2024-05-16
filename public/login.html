@@ -1,0 +1,54 @@
+<!--login.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form id="loginForm">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+            <button class="Login" type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+    </div>
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Get username and password from the form
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Send a POST request to the server
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to the task manager page
+                    window.location.href = "task.html";
+                } else {
+                    // Display error message
+                    alert("Invalid username or password");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred. Please try again later.");
+            });
+        });
+    </script>
+</body>
+</html>

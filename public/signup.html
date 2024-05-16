@@ -1,0 +1,63 @@
+<!--signup.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+<link rel="stylesheet" href="signup.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form id="signupForm">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required><br><br>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+            <button type="button" onclick="submitForm()">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+
+    <script>
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+
+            // Here you can add code to handle form submission and validation
+            // For simplicity, let's assume the form submission is successful
+            alert("Sign up successful! You can now login.");
+            // Redirect to the login page after successful signup
+            window.location.href = "login.html";
+        });
+         
+        function submitForm() {
+                var formData = {
+                    username: document.getElementById("username").value,
+                    email: document.getElementById("email").value,
+                    password: document.getElementById("password").value
+                };
+
+                // Send form data to the server using AJAX
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/signup", true);
+                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        alert("Sign up successful! You can now login.");
+                        window.location.href = "login.html"; // Redirect to login page
+                    } else {
+                        alert("Error: " + xhr.responseText);
+                    }
+                };
+                xhr.onerror = function() {
+                    alert("Request failed. Please try again later.");
+                };
+                xhr.send(JSON.stringify(formData));
+        }
+
+    </script>
+</body>
+</html>
